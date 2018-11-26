@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Catálogo de Carros</title>
+</head>
+<body>
+	<header>
+		<p> Loja: <span data-js="nomeloja"> </span></p>
+		<p> Telefone: <span data-js="telefoneloja">  </span></p>
+	</header>
+	<div class="cadastra_carros">
+		<form>
+			<fieldset>
+				<legend> Informações sobre o carro</legend>
+				<label for="imgCarro"> Link para imagem do carro</label><br>
+				<input type="url" data-js="imgCarro" id="imgCarro" required><br>
+
+				<label for="marca_modelo">Marca e modelo</label><br>
+				<input type="text" data-js="marcamodelo" id="marca_modelo" required><br>
+
+				<label for="text">Ano</label><br>
+				<input type="text" data-js="ano" id="ano" required><br>
+
+				<label for="placa">Placa do Carro</label><br>
+				<input type="text" data-js="placa" id="placa" required><br>
+
+				<label for="cor">Cor do carro</label><br>
+				<input type="text" data-js="cor" id="cor" required><br><br>
+
+				<input type="submit" data-js="enviar" name="Cadastrar">
+			</fieldset>
+		</form>
+	</div>
+	<br>
+	<div class="mostrarcarros">
+		<table>
+			<thead>
+				<tr>
+					<th>Imagem</th>		
+					<th>Marca/Modelo</th>	
+					<th>Ano</th>			
+					<th>Placa</th>			
+					<th>Cor</th>				
+				</tr>
+			</thead>
+			<tbody data-js="carroscadastrados">
+			</tbody>
+
+		</table>
+	</div>
+
+	<script type="text/javascript" src="DOM.js"></script>
+	<script type="text/javascript" src="challenger.js"></script>
+</body>
+</html>
