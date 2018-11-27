@@ -1,11 +1,21 @@
 table, th, td {
 	border: 1px solid black;
+}
 
+.cadastra_carros {
+	float: left;
+	width: 40%;
+}
+
+.mostrarcarros {
+	float: right;
+	width: 40%;
 }
 
 th{
-	border: 5px solid transparent;
+	
 	background-clip: padding-box;
+	width: 300px;
 }
 
 img{

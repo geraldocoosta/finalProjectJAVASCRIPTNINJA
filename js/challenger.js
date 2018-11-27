@@ -32,7 +32,20 @@
       let $tableRow = document.createElement('tr');
       let $tableData = returnArrayWithElements();
       populeRow($tableRow, $tableData);
+      setExcludeButton($tableRow);
       $tableCar.get()[0].appendChild($tableRow);
+    }
+
+    function setExcludeButton(row){
+      let td = document.createElement('td');
+      let button = document.createElement('button');
+      button.appendChild(document.createTextNode('Excluir'));
+      td.appendChild(button);
+      button.addEventListener('click',function(){
+        var removed = this.parentElement.parentElement;
+        removed.remove();
+      },false)
+      return row.appendChild(td);
     }
 
     function returnArrayWithElements() {
@@ -47,6 +60,9 @@
 
 
     function setNomeETelefone(content) {
+      if (content === null){
+        return;
+      }
       let answer = JSON.parse(content);
       let $nomeLoja = new DOM('[data-js="nomeloja"]');
       let $telefoneLoja = new DOM('[data-js="telefoneloja"]');
@@ -77,21 +93,21 @@
     }
 
     function limparCampos() {
-      $campoImagemCarro.value = "";
-      $campoMarcaModelo.value = "";
-      $campoAnoCarro.value = "";
-      $campoPlacaCarro.value = "";
-      $campoCorCarro.value = "";
+      $campoImagemCarro.element[0].value = "";
+      $campoMarcaModelo.element[0].value = "";
+      $campoAnoCarro.element[0].value = "";
+      $campoPlacaCarro.element[0].value = "";
+      $campoCorCarro.element[0].value = "";
     }
 
     function initializing() {
 
-      // getURL('company.json', function (content, error) {
-      //   if (error != null) {
-      //     console.log('Erro na requisição ' + error);
-      //   }
-      //   setNomeETelefone(content);
-      // });
+      getURL('js/company.json', function (content, error) {
+        if (error != null) {
+          console.log('Erro na requisição ' + error);
+        }
+        setNomeETelefone(content);
+      });
 
       $butaoEnviar.on('click', function (e) {
         e.preventDefault();
