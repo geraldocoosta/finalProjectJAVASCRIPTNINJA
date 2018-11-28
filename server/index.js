@@ -19,9 +19,16 @@
 // express, e se lá dentro tem um arquivo iniciador ou index.js
 var express = require('express');
 var cors = require('cors');
+var bodyParser = require('body-parser');
+
+var users = [{ username: 'Gege', age: 21 },
+{ username: 'Tete', age: 19 },
+{ username: 'Pitoco', age: 32 }];
 
 // executando o express aparentemente.
 var app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 // aqui estamos settando uma chamada normal a raiz dessa api, com o metodo
@@ -31,8 +38,8 @@ app.use(cors());
 // req = request, resp = response, 21 anos de curso, já tá obvio
 // lembrando, se retornar direto, vai ficar carregando até o infinito
 // método send do resp que retorna a resposta pro front
-app.get('/', function(req, resp) {
-    resp.send({gege: "lindinho"});
+app.get('/', function (_, resp) {
+    resp.json({ gege: "lindinho" });
 });
 //lembrando que nas apis REST ssó são retornados objetos json
 
@@ -49,9 +56,17 @@ app.get('/', function(req, resp) {
 
 
 // podemos acessar um parametro váriavel aqui no node com a seguinte sintaxe
-app.get('/user/:username',function(req,resp){
+app.get('/user/:username', function (req, resp) {
     var username = req.params.username;
-    resp.send(username);
+    var exist = users.some(function (user) {
+        return username === user.username;
+    });
+    if (!exist) {
+        return resp.status(404).json({ Erro: 'Usuario não identificado' });
+    }
+    resp.json(users.filter(function (item) {
+        return item.username === username;
+    }));
 });
 // explicando, quando é colocado dois pontos algo, como no exemplo acima
 // aquela parte da url vira uma váriavel
@@ -60,6 +75,26 @@ app.get('/user/:username',function(req,resp){
 // lembrando que o método é params do parametro requisition, acessando
 // o objeto com mesmo nome do parametro passado na url
 
+// criei uma váriavel com um array, que retorna quando o usuario é existe
+// baseado na url váriavel
+
+//agora, vamos construir um método post
+app.post('/', function (req, resp) {
+    var username = req.body.username;
+    var age = req.body.age;
+    var exist = users.some(function (user) {
+        return username === user.username;
+    });
+    if (!exist) {
+        users.push({ username: username, age: age });
+    }
+    resp.json(users);
+});
+
+// para conseguir identificar uma query string e transformala em objeto
+// precisamos de uma dependencia chamada body parser
+// o comando para instalar essa dependencia é o seguinte:
+// npm install --save body-parser
+// depois settamos ele junto com as outras dependencias
 
 app.listen('3000');
-console.log('rodando na porta 3000');
