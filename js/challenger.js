@@ -32,27 +32,29 @@
     function setCarroInTable(content) {
       let cars = JSON.parse(content);
       let fragment = document.createDocumentFragment();
-      let mapCars = cars.map(function (item) {
+      cars.forEach(function (item) {
         let $tableRow = document.createElement('tr');
         let arrAtributes = [item.urlcar, item.marcamodelo, item.ano, item.placa, item.cor];
 
-        let tds = arrAtributes.map(function (item, index) {
+        arrAtributes.forEach(function (item, index) {
           let td = document.createElement('td');
           if (index === 0) {
             let img = document.createElement('img');
             img.setAttribute('src', item);
             td.appendChild(img);
-            return td;
+            setExcludeButton(row);
+            $tableRow.appendChild(td);
           }
           td.appendChild(document.createTextNode(item));
-          return td;
+          setExcludeButton(row);
+          $tableRow.appendChild(td);
         });
 
-        $tableRow.appendChild(tds);
 
-
+        fragment.appendChild($tableRow);
       });
 
+      $tableCar.appendChild(fragment);
     }
 
     function setExcludeButton(row) {
