@@ -44,7 +44,7 @@
     // pode-se fazer um abort ao receber somente os cabeçalhos, com o readtstate
     // junto com esse método, não perderei tempo com isso
     // quando usado o método post, deve ser usado o método setRequestHeader
-    // ta sentando o tipo do cabeçalho da requisição, no caso, o mais usado é
+    // ta setando o tipo do cabeçalho da requisição, no caso, o mais usado é
     // para setar o Content-Type, geralmente com o valor 'aplication/www-form-urlencoded'
     // no send, será enviado o valor no formato de query string
 })();
