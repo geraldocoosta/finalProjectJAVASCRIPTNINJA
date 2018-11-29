@@ -31,7 +31,6 @@
 
     function setCarroInTable(content) {
       let cars = JSON.parse(content);
-      let fragment = document.createDocumentFragment();
       cars.forEach(function (item) {
         let $tableRow = document.createElement('tr');
         let arrAtributes = [item.urlcar, item.marcamodelo, item.ano, item.placa, item.cor];
@@ -48,10 +47,8 @@
           $tableRow.appendChild(td);
         });
         setExcludeButton($tableRow);
-        fragment.appendChild($tableRow);
+        $tableCar.appendChild($tableRow);
       });
-
-      $tableCar.appendChild(fragment);
     }
 
     function setExcludeButton(row) {
