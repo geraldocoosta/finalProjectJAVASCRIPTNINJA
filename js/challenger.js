@@ -42,15 +42,12 @@
             let img = document.createElement('img');
             img.setAttribute('src', item);
             td.appendChild(img);
-            setExcludeButton(row);
-            $tableRow.appendChild(td);
+            return $tableRow.appendChild(td);
           }
           td.appendChild(document.createTextNode(item));
-          setExcludeButton(row);
           $tableRow.appendChild(td);
         });
-
-
+        setExcludeButton($tableRow);
         fragment.appendChild($tableRow);
       });
 
@@ -113,10 +110,10 @@
       });
 
       getURL('http://localhost:3000', 'POST', function (content, error) {
-        if (error === null) {
-          //return setCarroinTable(content);
+        if (!error) {
+          setCarroInTable(content);
         }
-        console.log(error);
+        return error;
       }, queryString);
 
     }
@@ -138,7 +135,6 @@
           return;
         }
         setCarroNoServer();
-        setCarroInTable();
         limparCampos();
       });
     }
