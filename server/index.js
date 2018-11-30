@@ -16,6 +16,24 @@ app.get('/', function (_, resp) {
     resp.json(cars);
 });
 
+app.delete('/', function (req, resp) {
+    let placa = req.body.placa.trim();
+    let index = -1;
+
+    for (let i = 0; i < cars.length; i++) {
+        if (cars[i].placa === placa) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index > -1) {
+        cars.splice(index, 1);
+    }
+
+    resp.json(cars);
+});
+
 app.post('/', function (req, resp) {
     let urlcar = req.body.urlcar;
     let marcamodelo = req.body.marcamodelo;

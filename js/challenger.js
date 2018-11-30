@@ -30,6 +30,7 @@
     }
 
     function setCarroInTable(content) {
+      refreshLinhas();
       let cars = JSON.parse(content);
       cars.forEach(function (item) {
         let $tableRow = document.createElement('tr');
@@ -47,8 +48,16 @@
           $tableRow.appendChild(td);
         });
         setExcludeButton($tableRow);
-        $tableCar.appendChild($tableRow);
+        $tableCar.get()[0].appendChild($tableRow);
       });
+    }
+
+    function refreshLinhas() {
+      let linhas = $tableCar.element[0].children;
+      if (linhas.length > 0) {
+        $tableCar.get()[0].removeChild(linhas[0]);
+        refreshLinhas();
+      }
     }
 
     function setExcludeButton(row) {
@@ -57,12 +66,21 @@
       button.appendChild(document.createTextNode('Excluir'));
       td.appendChild(button);
       button.addEventListener('click', function () {
-        var removed = this.parentElement.parentElement;
-        removed.remove();
+        removeNoBackEnd(this);
       }, false)
       return row.appendChild(td);
     }
 
+    function removeNoBackEnd(removed) {
+      let row = removed.parentElement.parentElement;
+      let placa = row.childNodes[3].innerText;
+      getURL('http://localhost:3000', 'DELETE', function (content, error) {
+        if (!error) {
+          setCarroInTable(content);
+        }
+        return error;
+      }, 'placa=' + placa);
+    }
 
     function setNomeETelefone(content) {
       if (content === null) {
@@ -122,6 +140,13 @@
           console.log('Erro na requisição ' + error);
         }
         setNomeETelefone(content);
+      });
+
+      getURL('http://localhost:3000', 'GET', function (content, error) {
+        if (error != null) {
+          console.log('Erro na requisição ' + error);
+        }
+        setCarroInTable(content);
       });
 
       $butaoEnviar.on('click', function (e) {
